@@ -13,7 +13,23 @@ function App() {
 
 useEffect(() => {
   localStorage.setItem("tasks", JSON.stringify(tasks))
-}, [tasks])
+}, [tasks]);
+
+useEffect(() => {
+  async function fetchTasks(){
+  
+  const response = await fetch(
+    'https://jsonplaceholder.typicode.com/todos?_limit=10',
+  {
+    method: "GET",
+  });
+  
+  const data = await response.json();
+  setTasks(data);
+  };
+  //Chamador da API
+  //fetchTasks();
+}, []);
 
 function onTaskClick(taskId){
   const newTasks = tasks.map (task => {
